@@ -1,5 +1,6 @@
 import 'package:chatvoice/pallete.dart';
 import 'package:flutter/material.dart';
+import 'package:chatvoice/feature_box.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -71,6 +72,33 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            alignment: Alignment.centerLeft,
+            margin:const EdgeInsets.only(
+              top: 10,
+              left: 22,
+            ),
+            child: const Text(
+              "Here are a few feature",
+              style: TextStyle(
+                fontFamily: 'Cera Pro',
+                color: Pallete.mainFontColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        const   Column(
+          children:[
+              FeatureBox(
+              color:Pallete.firstSuggestionBoxColor,
+              headerText: 'ChatGPT',
+              descriptionText: 'A smarter way to stay organized and informed with ChatGPT',
+            )
+          ]
+          
           )
         ],
       ),
