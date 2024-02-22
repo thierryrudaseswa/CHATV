@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  void startListening() async{
+  Future<void> startListening() async{
     await speechToText.listen(onResult: onSpeechResult);
     setState(() {});
   }
-  void stopListening() async{
+   Future<void> stopListening() async{
     await speechToText.stop();
     setState(() {});
   }
@@ -41,7 +41,6 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     speechToText.stop();
   }
@@ -61,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 height: 120,
                 width: 120,
                 margin: const EdgeInsets.only(top: 4),
-                decoration: BoxDecoration(
+                decoration: const  BoxDecoration(
                   color: Pallete.assistantCircleColor,
                   shape: BoxShape.circle,
                 ),
@@ -87,11 +86,11 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               border: Border.all(color: Pallete.borderColor),
             ),
-            child: Padding(
+            child:const  Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 "Good Morning, what task can I do for you?",
-                style: TextStyle(
+                style:TextStyle(
                   fontFamily: 'Cera Pro',
                   color: Pallete.mainFontColor,
                   fontSize: 25,
@@ -103,7 +102,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10),
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(top: 10, left: 22),
-            child: Text(
+            child: const Text(
               "Here are a few features",
               style: TextStyle(
                 fontFamily: 'Cera Pro',
@@ -133,7 +132,16 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton:
        FloatingActionButton(
         backgroundColor: Pallete.firstSuggestionBoxColor,
-        onPressed: (){},
+        onPressed: () async{
+if( await speechToText.hasPermission && speechToText.isNotListening){
+  await startListening();
+}else if(speechToText.isListening){
+  await stopListening();
+}
+else{
+  initSpeechToText();
+}
+        },
         child: const Icon(Icons.mic),
        )
       ,
