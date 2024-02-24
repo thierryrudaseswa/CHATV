@@ -24,7 +24,7 @@ class OpenAIService {
       print('yay');
      }
 
-    }catch(e){
+    }catch(e){ 
       return e.toString();
     }
   }

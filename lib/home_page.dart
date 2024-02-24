@@ -1,3 +1,4 @@
+import 'package:chatvoice/openai_service.dart';
 import 'package:chatvoice/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:chatvoice/feature_box.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final speechToText = SpeechToText();
   String lastWords = '';
+  final OpenAIService openAIService =  OpenAIService();
   @override
   void initState() {
     super.initState();
@@ -136,7 +138,10 @@ class _HomePageState extends State<HomePage> {
 if( await speechToText.hasPermission && speechToText.isNotListening){
   await startListening();
 }else if(speechToText.isListening){
+  openAIService
   await stopListening();
+
+
 }
 else{
   initSpeechToText();
