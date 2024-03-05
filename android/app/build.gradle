@@ -1,68 +1,51 @@
 buildscript {
-    ext.kotlin_version = '1.5.20'
+    ext.kotlin_version = '1.6.10'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0' // Updated Android Gradle plugin version
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'dev.flutter:flutter-gradle-plugin:...'
+        classpath 'com.google.gms:google-services:4.3.10'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'dev.flutter.flutter-gradle'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "com.example.chatvoice"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            // TODO: Add your signing config for release build
-            // signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    // Enable multidex support for older Android versions
-    multiDexEnabled true
-
-    // Enable Java 8 support
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
         jvmTarget = '1.8'
     }
 
-    // Add kotlin source directory
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    // Enable ProGuard for release builds
-    buildTypes {
-        release {
-            minifyEnabled true
-            useProguard true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    // Add the AndroidX dependency
-    project.configurations.all {
+    configurations.all {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'androidx.core' && !details.requested.name.contains('androidx')) {
                 details.useVersion "1.6.0"
@@ -70,7 +53,6 @@ android {
         }
     }
 
-    // Add multidex support
     dependencies {
         implementation 'androidx.multidex:multidex:2.0.1'
     }
@@ -81,6 +63,5 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }

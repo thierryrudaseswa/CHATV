@@ -16,10 +16,9 @@
     </queries>
 
     <application
-        android:name="io.flutter.app.FlutterApplication"
-        android:label="chatvoice"cls
-        android:icon="@mipmap/ic_launcher">
-        
+    android:name="${applicationName}"
+    android:label="chatvoice"
+    android:icon="@mipmap/ic_launcher">
         <!-- Activity -->
         <activity
             android:name=".MainActivity"
@@ -33,10 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+         <meta-data
+        android:name="flutterEmbedding"
+        android:value="2" />
 
-        <!-- Meta-data for Flutter -->
-        <meta-data
-            android:name="flutterEmbedding"
-            android:value="2" />
     </application>
 </manifest>
